@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Face Detection WebSocket Test</title>
+</head>
+<body>
+    <h1>WebSocket Test</h1>
+    <div id="messages"></div>
+
+    <script>
+        const ws = new WebSocket('ws://localhost:8282/faces');
+        
+        ws.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.innerHTML += `
+                <p>New image processed!</p>
+                <p>Faces detected: ${data.face_count}</p>
+                <img src="http://localhost:8282${data.url}" width="400">
+                <hr>
+            `;
+        };
+
+        ws.onopen = function() {
+            console.log('Connected to WebSocket');
+        };
+
+        ws.onerror = function(error) {
+            console.log('WebSocket Error:', error);
+        };
+    </script>
+</body>
+</html>

@@ -10,9 +10,11 @@
     <script>
         const ws = new WebSocket('ws://localhost:8282/faces');
         
+        // This function runs whenever we receive a message from the server
         ws.onmessage = function(event) {
             const data = JSON.parse(event.data);
             const messagesDiv = document.getElementById('messages');
+            // Add new content to the div
             messagesDiv.innerHTML += `
                 <p>New image processed!</p>
                 <p>Faces detected: ${data.face_count}</p>
@@ -21,10 +23,12 @@
             `;
         };
 
+        // This runs when the WebSocket connection is successfully established
         ws.onopen = function() {
             console.log('Connected to WebSocket');
         };
 
+        // This runs if there's any error with the WebSocket connection
         ws.onerror = function(error) {
             console.log('WebSocket Error:', error);
         };

@@ -24,8 +24,8 @@ This application is a FastAPI-based server that performs face detection on uploa
 
 2. **Build and run with Docker**
    ```bash
-   docker build -t face-detection-app .
-   docker run -p 8282:8282 face-detection-app
+   docker build -t face-forge .
+   docker run -p 8282:8282 face-forge
    ```
 
    The server will be available at `http://localhost:8282`

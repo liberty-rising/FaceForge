@@ -72,3 +72,94 @@ If you encounter any issues:
 2. Check that port 8282 is not in use
 3. Verify that your image file is valid
 4. Check the browser console for WebSocket connection errors
+
+## Technical Implementation Details
+
+### Architecture Choices
+
+1. **FastAPI Framework**
+   - Chosen for its async support and WebSocket capabilities
+   - High performance and modern Python features
+   - Built-in OpenAPI documentation
+   - Built in swagger for API testing.
+
+2. **Face Detection Implementation**
+   ```python:app/face_detector.py
+   startLine: 6
+   endLine: 42
+   ```
+   - Uses OpenCV's Haar Cascade Classifier for face detection
+   - Advantages:
+     - Fast processing speed
+     - Low computational requirements
+     - Good for real-time applications
+   - Limitations:
+     - May miss faces at extreme angles
+     - Less accurate than deep learning models
+     - Sensitive to lighting conditions
+
+3. **WebSocket Implementation**
+   ```python:app/main.py
+   startLine: 50
+   endLine: 66
+   ```
+   - Maintains active connections in memory
+   - Broadcasts results to all connected clients
+   - Handles disconnections gracefully
+
+### Potential Improvements
+
+1. **Face Detection Enhancements**
+   - Replace Haar Cascade with deep learning models:
+     - MTCNN (Multi-task Cascaded Convolutional Networks)
+     - RetinaFace
+     - YOLOv5-face
+   - These would provide:
+     - Higher accuracy
+     - Better handling of varied poses
+     - Facial landmark detection
+     - Face recognition capabilities
+
+2. **Image Processing**
+   - Add image preprocessing:
+     - Automatic brightness adjustment
+     - Contrast enhancement
+     - Image scaling optimization
+   - Implement face alignment
+   - Add face attribute detection (age, gender, emotions)
+
+3. **Performance Optimizations**
+   - Add image caching
+   - Implement batch processing
+   - Add GPU support for faster processing
+   - Optimize image storage and cleanup
+
+4. **Security Enhancements**
+   - Add authentication for WebSocket connections
+   - Implement rate limiting
+   - Add image validation
+   - Secure file storage
+
+5. **Scalability Improvements**
+   - Implement connection pooling
+   - Add load balancing
+   - Use external storage (S3, Azure Blob) for images
+   - Add database for tracking processed images
+
+### Configuration Options
+
+The current implementation allows for several adjustments in the face detection parameters:
+```python:app/face_detector.py
+startLine: 22
+endLine: 27
+
+Key parameters that can be tuned:
+- `scaleFactor`: Affects detection accuracy vs speed (current: 1.1)
+- `minNeighbors`: Controls false positive rate (current: 5)
+- `minSize`: Minimum face size to detect (current: 30x30)
+
+These parameters can be adjusted based on the specific use case:
+- Lower `scaleFactor` (e.g., 1.05) for higher accuracy
+- Higher `minNeighbors` (e.g., 6-8) for fewer false positives
+- Adjust `minSize` based on expected face sizes in your images
+```

@@ -152,6 +152,7 @@ The current implementation allows for several adjustments in the face detection 
 ```python:app/face_detector.py
 startLine: 22
 endLine: 27
+```
 
 Key parameters that can be tuned:
 - `scaleFactor`: Affects detection accuracy vs speed (current: 1.1)
@@ -162,4 +163,3 @@ These parameters can be adjusted based on the specific use case:
 - Lower `scaleFactor` (e.g., 1.05) for higher accuracy
 - Higher `minNeighbors` (e.g., 6-8) for fewer false positives
 - Adjust `minSize` based on expected face sizes in your images
-```
